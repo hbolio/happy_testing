@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { BASE_URL } from '../constants';
 import { HomePage } from '../pom/HomePage';
+import { LoginPage } from '../pom/LoginPage';
 import { TEST_USER } from '../constants';
 import { login } from '../fixtures';
 
@@ -16,4 +17,13 @@ test.describe('Home / Authentication', () => {
     await login(page);
     await expect(page).toHaveURL(/.*\/dishes/);
   });
+
+  test('can navigate to login page and see form fields', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await expect(loginPage.emailInput).toBeVisible();
+    await expect(loginPage.passwordInput).toBeVisible();
+    await expect(loginPage.submitButton).toBeVisible();
+  });
 });
+

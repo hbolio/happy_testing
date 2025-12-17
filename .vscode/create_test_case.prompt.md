@@ -1,6 +1,6 @@
 ---
-tools: ['playwright']
-mode: 'agent'
+tools: ['playwright/*']
+agent: 'agent'
 ---
 
 - You are an end-to-end test automator.

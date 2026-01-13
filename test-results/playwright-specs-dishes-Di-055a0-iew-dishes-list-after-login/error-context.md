@@ -1,0 +1,189 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - img "NutriApp" [ref=e5]
+      - generic [ref=e6]: NutriApp
+    - navigation [ref=e7]:
+      - link "Recetas" [ref=e8] [cursor=pointer]:
+        - /url: /dishes
+      - button "Logout" [ref=e10]
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - heading "Sugerencias de Platillos" [level=1] [ref=e14]
+        - link "+ Agregar Platillo" [ref=e15] [cursor=pointer]:
+          - /url: /dishes/new
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - img "Ensalada de Quinoa y Aguacate" [ref=e19]
+            - generic [ref=e20]: Rápido
+          - heading "Ensalada de Quinoa y Aguacate" [level=2] [ref=e21]
+          - paragraph [ref=e22]: Una ensalada refrescante y nutritiva con quinoa, aguacate, tomate cherry y un aderezo ligero de limón.
+          - generic [ref=e23]:
+            - generic [ref=e24]:
+              - link "Ver" [ref=e25] [cursor=pointer]:
+                - /url: /dishes/18/view
+              - link "Editar" [ref=e26] [cursor=pointer]:
+                - /url: /dishes/18
+            - button "Eliminar" [ref=e27]
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - img "Tacos de Lentejas" [ref=e30]
+            - generic [ref=e31]: Rápido
+          - heading "Tacos de Lentejas" [level=2] [ref=e32]
+          - paragraph [ref=e33]: Alternativa vegetariana y rica en fibra. Lentejas sazonadas y tortillas de maíz con tus toppings favoritos.
+          - generic [ref=e34]:
+            - generic [ref=e35]:
+              - link "Ver" [ref=e36] [cursor=pointer]:
+                - /url: /dishes/19/view
+              - link "Editar" [ref=e37] [cursor=pointer]:
+                - /url: /dishes/19
+            - button "Eliminar" [ref=e38]
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - img "Sopa de Verduras de Temporada" [ref=e41]
+            - generic [ref=e42]: 40 min
+          - heading "Sopa de Verduras de Temporada" [level=2] [ref=e43]
+          - paragraph [ref=e44]: Receta reconfortante llena de vitaminas. Las verduras frescas se cocinan en un caldo ligero.
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - link "Ver" [ref=e47] [cursor=pointer]:
+                - /url: /dishes/20/view
+              - link "Editar" [ref=e48] [cursor=pointer]:
+                - /url: /dishes/20
+            - button "Eliminar" [ref=e49]
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - img "Bowl de Avena con Frutas" [ref=e52]
+            - generic [ref=e53]: Rápido
+          - heading "Bowl de Avena con Frutas" [level=2] [ref=e54]
+          - paragraph [ref=e55]: Un desayuno energético y completo. Avena cocida lentamente y decorada con frutas frescas, plátano y fresas.
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - link "Ver" [ref=e58] [cursor=pointer]:
+                - /url: /dishes/21/view
+              - link "Editar" [ref=e59] [cursor=pointer]:
+                - /url: /dishes/21
+            - button "Eliminar" [ref=e60]
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - img "Pasta Integral con Pesto de Espinaca" [ref=e63]
+            - generic [ref=e64]: Rápido
+          - heading "Pasta Integral con Pesto de Espinaca" [level=2] [ref=e65]
+          - paragraph [ref=e66]: Pasta integral acompañada de un pesto fresco de espinaca y nuez, ideal para una comida rápida y saludable.
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - link "Ver" [ref=e69] [cursor=pointer]:
+                - /url: /dishes/22/view
+              - link "Editar" [ref=e70] [cursor=pointer]:
+                - /url: /dishes/22
+            - button "Eliminar" [ref=e71]
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - img "Curry de Garbanzos" [ref=e74]
+            - generic [ref=e75]: 40 min
+          - heading "Curry de Garbanzos" [level=2] [ref=e76]
+          - paragraph [ref=e77]: Curry vegetariano con garbanzos, tomate, cebolla y especias, servido con arroz basmati.
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - link "Ver" [ref=e80] [cursor=pointer]:
+                - /url: /dishes/16/view
+              - link "Editar" [ref=e81] [cursor=pointer]:
+                - /url: /dishes/16
+            - button "Eliminar" [ref=e82]
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - img "Pizza Saludable de Vegetales" [ref=e85]
+            - generic [ref=e86]: 40 min
+          - heading "Pizza Saludable de Vegetales" [level=2] [ref=e87]
+          - paragraph [ref=e88]: Base de pizza integral cubierta con salsa de tomate, vegetales frescos y queso bajo en grasa.
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - link "Ver" [ref=e91] [cursor=pointer]:
+                - /url: /dishes/17/view
+              - link "Editar" [ref=e92] [cursor=pointer]:
+                - /url: /dishes/17
+            - button "Eliminar" [ref=e93]
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - img "Ensalada de Quinoa y Aguacate" [ref=e96]
+            - generic [ref=e97]: Rápido
+          - heading "Ensalada de Quinoa y Aguacate" [level=2] [ref=e98]
+          - paragraph [ref=e99]: Una ensalada refrescante y nutritiva con quinoa, aguacate, tomate cherry y un aderezo ligero de limón.
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - link "Ver" [ref=e102] [cursor=pointer]:
+                - /url: /dishes/10/view
+              - link "Editar" [ref=e103] [cursor=pointer]:
+                - /url: /dishes/10
+            - button "Eliminar" [ref=e104]
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - img "Sopa de Verduras de Temporada" [ref=e107]
+            - generic [ref=e108]: 40 min
+          - heading "Sopa de Verduras de Temporada" [level=2] [ref=e109]
+          - paragraph [ref=e110]: Receta reconfortante llena de vitaminas. Las verduras frescas se cocinan en un caldo ligero.
+          - generic [ref=e111]:
+            - generic [ref=e112]:
+              - link "Ver" [ref=e113] [cursor=pointer]:
+                - /url: /dishes/12/view
+              - link "Editar" [ref=e114] [cursor=pointer]:
+                - /url: /dishes/12
+            - button "Eliminar" [ref=e115]
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - img "Pasta Integral con Pesto de Espinaca" [ref=e118]
+            - generic [ref=e119]: Rápido
+          - heading "Pasta Integral con Pesto de Espinaca" [level=2] [ref=e120]
+          - paragraph [ref=e121]: Pasta integral acompañada de un pesto fresco de espinaca y nuez, ideal para una comida rápida y saludable.
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - link "Ver" [ref=e124] [cursor=pointer]:
+                - /url: /dishes/14/view
+              - link "Editar" [ref=e125] [cursor=pointer]:
+                - /url: /dishes/14
+            - button "Eliminar" [ref=e126]
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - img "Wrap de Pollo y Vegetales" [ref=e129]
+            - generic [ref=e130]: Rápido
+          - heading "Wrap de Pollo y Vegetales" [level=2] [ref=e131]
+          - paragraph [ref=e132]: Wrap de tortilla integral relleno de pollo a la plancha, lechuga, tomate y aderezo ligero.
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - link "Ver" [ref=e135] [cursor=pointer]:
+                - /url: /dishes/23/view
+              - link "Editar" [ref=e136] [cursor=pointer]:
+                - /url: /dishes/23
+            - button "Eliminar" [ref=e137]
+        - generic [ref=e138]:
+          - generic [ref=e139]:
+            - img "Curry de Garbanzos" [ref=e140]
+            - generic [ref=e141]: 40 min
+          - heading "Curry de Garbanzos" [level=2] [ref=e142]
+          - paragraph [ref=e143]: Curry vegetariano con garbanzos, tomate, cebolla y especias, servido con arroz basmati.
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - link "Ver" [ref=e146] [cursor=pointer]:
+                - /url: /dishes/24/view
+              - link "Editar" [ref=e147] [cursor=pointer]:
+                - /url: /dishes/24
+            - button "Eliminar" [ref=e148]
+        - generic [ref=e149]:
+          - generic [ref=e150]:
+            - img "Pizza Saludable de Vegetales" [ref=e151]
+            - generic [ref=e152]: 40 min
+          - heading "Pizza Saludable de Vegetales" [level=2] [ref=e153]
+          - paragraph [ref=e154]: Base de pizza integral cubierta con salsa de tomate, vegetales frescos y queso bajo en grasa.
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - link "Ver" [ref=e157] [cursor=pointer]:
+                - /url: /dishes/25/view
+              - link "Editar" [ref=e158] [cursor=pointer]:
+                - /url: /dishes/25
+            - button "Eliminar" [ref=e159]
+```

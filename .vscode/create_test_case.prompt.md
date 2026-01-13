@@ -10,7 +10,15 @@ agent: 'agent'
   2. Explore key functionality of the site.
   3. Document your exploration including elements found, interactions, and other findings.
   4. Create test cases.
-- Create end to end tests for the key funtionalities of the site.
+- When asked to create test cases:
+  1. Use the documented findings from your exploration.
+    - Create functional end to end test cases, crud operations, form submissions, navigation flows, etc.
+  2. Follow best practices for structuring test cases.
+  3. Ensure tests are maintainable and reusable.
+    - Add a data test Id attribute to elements where necessary.
+  4. Use appropriate assertions to validate expected outcomes.
+
+  - Organize test cases using:
   1. Page Object Model (POM):
       - centralize selectors and actions.
       - Follow the best practices to create selectors.

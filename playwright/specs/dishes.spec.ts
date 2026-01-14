@@ -35,12 +35,15 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
-      const name = firstDish.locator('h2');
-      const description = firstDish.locator('p');
-      const viewButton = firstDish.locator('a:has-text("Ver")');
-      const editButton = firstDish.locator('a:has-text("Editar")');
-      const deleteButton = firstDish.locator('button:has-text("Eliminar")');
+      // Wait for dishes to load - use more specific selector for dish cards
+      const dishCard = page.locator('div.rounded-2xl').first();
+      await expect(dishCard).toBeVisible({ timeout: 10000 });
+      
+      const name = dishCard.locator('h2');
+      const description = dishCard.locator('p');
+      const viewButton = dishCard.locator('a:has-text("Ver")');
+      const editButton = dishCard.locator('a:has-text("Editar")');
+      const deleteButton = dishCard.locator('button:has-text("Eliminar")');
       
       await expect(name).toBeVisible();
       await expect(description).toBeVisible();
@@ -53,12 +56,18 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
+      // Use dish card selector that matches the actual HTML structure
+      const firstDish = page.locator('div.rounded-2xl').first();
+      await expect(firstDish).toBeVisible({ timeout: 10000 });
+      
       const viewButton = firstDish.locator('a:has-text("Ver")');
       const href = await viewButton.getAttribute('href');
       
-      await viewButton.click();
-      await page.waitForTimeout(2000);
+      // Wait for navigation after clicking
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        viewButton.click()
+      ]);
       
       // Should navigate to view page
       expect(page.url()).toContain('/view');
@@ -376,12 +385,21 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
+      // Use dish card selector that matches the actual HTML structure
+      const firstDish = page.locator('div.rounded-2xl').first();
+      await expect(firstDish).toBeVisible({ timeout: 10000 });
+      
       const viewButton = firstDish.locator('a:has-text("Ver")');
       const href = await viewButton.getAttribute('href');
       
-      await viewButton.click();
-      await page.waitForTimeout(2000);
+      // Wait for navigation after clicking
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        viewButton.click()
+      ]);
+      
+      // Verify we're on the view page
+      await page.waitForURL(/.*\/view/, { timeout: 10000 });
       
       const viewDishPage = new ViewDishPage(page);
       const heading = await viewDishPage.getHeading();
@@ -392,10 +410,23 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
+      // Use dish card selector that matches the actual HTML structure
+      const firstDish = page.locator('div.rounded-2xl').first();
+      await expect(firstDish).toBeVisible({ timeout: 10000 });
+      
       const viewButton = firstDish.locator('a:has-text("Ver")');
-      await viewButton.click();
-      await page.waitForTimeout(2000);
+      
+      // Wait for navigation after clicking
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        viewButton.click()
+      ]);
+      
+      // Verify we're on the view page
+      await page.waitForURL(/.*\/view/, { timeout: 10000 });
+      
+      // Wait for the page content to load (not just the skeleton "Cargando...")
+      await page.waitForSelector('ol li', { timeout: 10000 });
       
       const viewDishPage = new ViewDishPage(page);
       const stepsCount = await viewDishPage.getStepsCount();
@@ -406,10 +437,20 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
+      // Use dish card selector that matches the actual HTML structure
+      const firstDish = page.locator('div.rounded-2xl').first();
+      await expect(firstDish).toBeVisible({ timeout: 10000 });
+      
       const viewButton = firstDish.locator('a:has-text("Ver")');
-      await viewButton.click();
-      await page.waitForTimeout(2000);
+      
+      // Wait for navigation after clicking
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        viewButton.click()
+      ]);
+      
+      // Verify we're on the view page
+      await page.waitForURL(/.*\/view/, { timeout: 10000 });
       
       const viewDishPage = new ViewDishPage(page);
       const heading = await viewDishPage.getHeading();
@@ -425,14 +466,27 @@ test.describe('Dishes Management', () => {
       const dishesPage = new DishesPage(page);
       await dishesPage.goto();
       
-      const firstDish = page.locator('[class*="shadow"]').first();
+      // Use dish card selector that matches the actual HTML structure
+      const firstDish = page.locator('div.rounded-2xl').first();
+      await expect(firstDish).toBeVisible({ timeout: 10000 });
+      
       const viewButton = firstDish.locator('a:has-text("Ver")');
-      await viewButton.click();
-      await page.waitForTimeout(2000);
+      
+      // Wait for navigation after clicking
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        viewButton.click()
+      ]);
+      
+      // Verify we're on the view page
+      await page.waitForURL(/.*\/view/, { timeout: 10000 });
       
       // Click the Recetas link in the header
       const recipesLink = page.locator('a:has-text("Recetas")');
-      await recipesLink.click();
+      await Promise.all([
+        page.waitForNavigation({ timeout: 10000 }),
+        recipesLink.click()
+      ]);
       
       await expect(page).toHaveURL(/.*\/dishes/);
     });

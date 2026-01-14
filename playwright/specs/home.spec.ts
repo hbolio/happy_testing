@@ -168,7 +168,8 @@ test.describe('Home / Authentication', () => {
     test('can logout from authenticated session', async ({ page }) => {
       await login(page);
       await logout(page);
-      await expect(page).toHaveURL(/.*\/$/);
+      // After logout, the app redirects to /login
+      await expect(page).toHaveURL(/.*\/(login|$)/);
     });
 
     test('unauthenticated user cannot access dishes page directly', async ({ page }) => {

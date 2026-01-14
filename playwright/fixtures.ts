@@ -25,7 +25,8 @@ export const login = async (page) => {
 export const logout = async (page) => {
   const homePage = new HomePage(page);
   await homePage.page.locator('button:has-text("Logout")').click();
-  await page.waitForURL('**/');
+  // Wait for navigation to complete - user can be redirected to login or home
+  await page.waitForURL(/.*(\/(login|$))/, { timeout: 10000 });
 };
 
 /**

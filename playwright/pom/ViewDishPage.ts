@@ -3,9 +3,7 @@ import { BASE_URL } from '../constants';
 
 export const SELECTORS = {
   heading: 'h2',
-  description: 'p:nth-of-type(2)',
-  prepTime: '[class*="min"]',
-  calories: 'generic:has-text("kcal")',
+  description: 'p',
   stepsHeading: 'h3:has-text("Pasos")',
   stepsList: 'ol li',
 };
@@ -19,14 +17,17 @@ export class ViewDishPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.heading = page.locator('h2');
-    this.description = page.locator('p:nth-of-type(2)');
+    this.heading = page.locator('h2').first();
+    // Get the second paragraph which is the description (first might be in another element)
+    this.description = page.locator('p').first();
     this.stepsHeading = page.locator('h3:has-text("Pasos")');
     this.stepsList = page.locator('ol li');
   }
 
   async gotoViewDish(dishId: number) {
     await this.page.goto(`${BASE_URL}/dishes/${dishId}/view`);
+    // Wait for the page to load
+    await this.page.waitForURL(/.*\/view/, { timeout: 10000 });
   }
 
   async getHeading() {

@@ -1,0 +1,7 @@
+name: happy-testing-infra
+description: Pulumi IaC for Vercel + database
+type: nodejs
+runtime:
+  name: nodejs
+  options:
+    typescript: true

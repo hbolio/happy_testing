@@ -1,0 +1,22 @@
+{
+  "name": "happy-testing-infra",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "echo 'no lint configured'",
+    "build": "tsc -p tsconfig.json --noEmit",
+    "preview": "pulumi preview",
+    "up": "pulumi up --yes"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.187.0",
+    "@pulumiverse/vercel": "^3.15.1",
+    "@pulumi/neon": "^0.13.0",
+    "@pulumi/supabase": "^1.6.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

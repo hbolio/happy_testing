@@ -6,9 +6,14 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
     services:
       postgres:
         image: postgres:15
@@ -36,25 +41,19 @@ jobs:
         PGPASSWORD: postgres
     - name: Run Prisma Migrations
       run: npx prisma migrate deploy
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
     - name: Seed Database
       run: npx ts-node seed.ts
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
     - name: Start Dev Server
       run: npm run dev &
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
     - name: Wait for Server
       run: sleep 10
     - name: Run Tests
       run: npx playwright test
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
 
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -65,13 +64,81 @@ jobs:
     - name: Generate Prisma Client
       run: npx prisma generate
     - run: npm run build
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nutriapp
 
-  deploy:
+  pulumi_preview:
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    if: github.event_name == 'pull_request'
+    environment: preview
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Cache infra npm
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-infra-npm-${{ hashFiles('infra/package.json') }}
+    - name: Install infra dependencies
+      run: npm install
+      working-directory: infra
+    - name: Pulumi Preview
+      uses: pulumi/actions@v4
+      with:
+        command: preview
+        stack-name: dev
+        work-dir: infra
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        VERCEL_API_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  pulumi_up:
     runs-on: ubuntu-latest
     needs: [test, build]
     if: github.ref == 'refs/heads/main'
+    environment: production
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: false
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Cache infra npm
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-infra-npm-${{ hashFiles('infra/package.json') }}
+    - name: Install infra dependencies
+      run: npm install
+      working-directory: infra
+    - name: Pulumi Up
+      uses: pulumi/actions@v4
+      with:
+        command: up
+        stack-name: prod
+        work-dir: infra
+        args: --yes
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        VERCEL_API_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [pulumi_up]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: false
     steps:
     - uses: actions/checkout@v4
     - uses: amondnet/vercel-action@v25

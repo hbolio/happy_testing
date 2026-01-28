@@ -67,7 +67,7 @@ You can modify the components in `src/app` to adapt the app to your needs.
 
 1. Clone the repository and enter the directory:
 	```bash
-	git clone https://github.com/Academy-QA/happy_testing.git
+	git clone https://github.com/hbolio/happy_testing.git
 	cd happy_testing
 	```
 2. Install dependencies:
@@ -138,3 +138,41 @@ describe('Login', () => {
 ```
 
 Add more tests to validate user flows and dish management!
+
+## CI/CD & Infrastructure Setup
+
+### Accounts to create
+- Vercel (project + team/org)
+- Pulumi (state backend)
+- Supabase (default DB provider)
+- Optional: Neon (alternative DB provider)
+
+### One-time bootstrap
+1. Install Pulumi CLI and login:
+	```bash
+	pulumi login
+	```
+2. Create or identify your Vercel project and record:
+	- `VERCEL_PROJECT_ID`
+	- `VERCEL_ORG_ID`
+3. Configure Pulumi stacks (dev + prod) with infra config (details in `infra/README.md`).
+
+### GitHub Secrets (Repo → Settings → Secrets and variables → Actions)
+Create the following repository secrets:
+- `PULUMI_ACCESS_TOKEN`
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
+- `SUPABASE_ACCESS_TOKEN`
+- Optional (if using Neon): `NEON_API_KEY`
+
+### How CI works
+- PRs to `main`: run tests, build, and `pulumi preview` (no deploy)
+- `main` branch: run tests, build, `pulumi up --yes`, then deploy to Vercel (production)
+
+### Run infra locally
+```bash
+cd infra
+pulumi preview --stack dev
+pulumi up --stack dev
+```

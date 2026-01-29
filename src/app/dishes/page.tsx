@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import DishesClientList from './DishesClientList';
+import { PrismaClient } from '@prisma/client';
 
 interface Dish {
   id: number;
@@ -20,14 +21,10 @@ export default async function DishesPage() {
     redirect('/login');
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-  const res = await fetch(`${baseUrl}/api/dishes`, {
-    headers: { Cookie: `session=${session.value}` },
-    cache: 'no-store',
+  const prisma = new PrismaClient();
+  const dishes = await prisma.dish.findMany({
+    where: { userId: Number(session.value) },
   });
-  const data = await res.json();
-  const dishes: Dish[] = data.dishes || [];
 
   return (
     <div className="py-10 px-2 max-w-7xl mx-auto">

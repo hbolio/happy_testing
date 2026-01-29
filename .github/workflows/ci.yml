@@ -36,7 +36,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Setup Database
-      run: psql -U postgres -c "CREATE DATABASE nutriapp;"
+      run: psql -h 127.0.0.1 -U postgres -c "CREATE DATABASE nutriapp;"
       env:
         PGPASSWORD: postgres
     - name: Run Prisma Migrations

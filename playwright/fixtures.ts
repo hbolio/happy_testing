@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, Page } from '@playwright/test';
 import { BASE_URL, TEST_USER } from './constants';
 import { LoginPage } from './pom/LoginPage';
 import { HomePage } from './pom/HomePage';
@@ -12,7 +12,7 @@ export const test = base.extend<MyFixtures>({});
 /**
  * Login helper function - logs in with the test user
  */
-export const login = async (page) => {
+export const login = async (page: Page) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.login(TEST_USER.email, TEST_USER.password);
@@ -22,7 +22,7 @@ export const login = async (page) => {
 /**
  * Logout helper function
  */
-export const logout = async (page) => {
+export const logout = async (page: Page) => {
   const homePage = new HomePage(page);
   await homePage.page.locator('button:has-text("Logout")').click();
   // Wait for navigation to complete - user can be redirected to login or home
@@ -32,7 +32,7 @@ export const logout = async (page) => {
 /**
  * Login and navigate to dishes page
  */
-export const loginAndGoDishes = async (page) => {
+export const loginAndGoDishes = async (page: Page) => {
   await login(page);
   await page.goto(`${BASE_URL}/dishes`);
 };

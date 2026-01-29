@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as vercel from "@pulumiverse/vercel";
-import * as supabase from "@pulumi/supabase";
-import * as neon from "@pulumi/neon";
+import * as supabase from "supabase";
+import * as neon from "neon";
 
 const config = new pulumi.Config();
 const stack = pulumi.getStack();
@@ -10,6 +10,7 @@ const appName = config.get("appName") ?? "happy-testing";
 const dbProvider = (config.get("dbProvider") ?? "supabase").toLowerCase();
 
 const vercelProjectId = config.get("vercelProjectId") ?? process.env.VERCEL_PROJECT_ID;
+const vercelImportProjectId = config.get("vercelImportProjectId");
 const vercelTeamId = config.get("vercelTeamId") ?? process.env.VERCEL_ORG_ID;
 const vercelProjectName = config.get("vercelProjectName") ?? `${appName}-${stack}`;
 const vercelFramework = config.get("vercelFramework") ?? "nextjs";
@@ -26,21 +27,21 @@ const project = new vercel.Project(
     nodeVersion: "20.x",
     rootDirectory: vercelRootDirectory,
   },
-  vercelProjectId ? { import: vercelProjectId } : undefined
+  vercelImportProjectId ? { import: vercelImportProjectId } : undefined
 );
 
 const databaseUrl = dbProvider === "neon" ? createNeonDatabase() : createSupabaseDatabase();
 
-const targets = stack === "prod" || stack === "production"
-  ? ["production"]
-  : ["preview", "development"];
+const isProd = stack === "prod" || stack === "production";
+const sensitiveTargets = isProd ? ["production"] : ["preview"];
+const standardTargets = isProd ? ["production"] : ["preview", "development"];
 
 new vercel.ProjectEnvironmentVariable("database-url", {
   projectId: project.id,
   teamId: vercelTeamId,
   key: "DATABASE_URL",
   value: databaseUrl,
-  targets,
+  targets: sensitiveTargets,
   sensitive: true,
   comment: "Managed by Pulumi",
 });
@@ -50,23 +51,28 @@ new vercel.ProjectEnvironmentVariable("node-env", {
   teamId: vercelTeamId,
   key: "NODE_ENV",
   value: stack === "prod" || stack === "production" ? "production" : "development",
-  targets,
+  targets: standardTargets,
   comment: "Managed by Pulumi",
 });
 
 function createSupabaseDatabase(): pulumi.Output<string> {
   const supabaseOrgId = config.require("supabaseOrganizationId");
   const supabaseRegion = config.get("supabaseRegion") ?? "us-east-1";
-  const supabaseInstanceSize = config.get("supabaseInstanceSize") ?? "micro";
+  const supabaseInstanceSize = config.get("supabaseInstanceSize");
   const supabaseDbPassword = config.requireSecret("supabaseDbPassword");
 
-  const supabaseProject = new supabase.Project("supabase-project", {
+  const supabaseProjectArgs: supabase.ProjectArgs = {
     organizationId: supabaseOrgId,
     name: `${appName}-${stack}`,
     databasePassword: supabaseDbPassword,
     region: supabaseRegion,
-    instanceSize: supabaseInstanceSize,
-  });
+  };
+
+  if (supabaseInstanceSize) {
+    supabaseProjectArgs.instanceSize = supabaseInstanceSize;
+  }
+
+  const supabaseProject = new supabase.Project("supabase-project", supabaseProjectArgs);
 
   return pulumi.interpolate`postgresql://postgres:${supabaseDbPassword}@db.${supabaseProject.id}.supabase.co:5432/postgres?sslmode=require`;
 }

@@ -13,6 +13,18 @@ This folder manages Vercel + database infrastructure with Pulumi (TypeScript).
 - `prod` -> production
 
 ## One-time bootstrap
+Use the helper script with an env file so each developer can supply their own tokens:
+
+```bash
+cp .env.pulumi.example .env.pulumi
+# edit .env.pulumi with your tokens
+
+./infra/scripts/bootstrap.sh          # dry-run
+./infra/scripts/bootstrap.sh --apply  # apply
+```
+
+Manual steps (if you prefer to run commands yourself):
+
 1. Login to Pulumi:
    ```bash
    pulumi login
@@ -28,6 +40,14 @@ This folder manages Vercel + database infrastructure with Pulumi (TypeScript).
    pulumi config set vercelProjectId <VERCEL_PROJECT_ID>
    pulumi config set vercelTeamId <VERCEL_ORG_ID>
    ```
+   If you need to import an existing Vercel project once:
+   ```bash
+   pulumi config set vercelImportProjectId <VERCEL_PROJECT_ID>
+   ```
+   After the first successful `pulumi up`, remove that config:
+   ```bash
+   pulumi config rm vercelImportProjectId
+   ```
 4. Supabase config (default provider):
    ```bash
    pulumi config set dbProvider supabase
@@ -36,6 +56,7 @@ This folder manages Vercel + database infrastructure with Pulumi (TypeScript).
    pulumi config set supabaseInstanceSize micro
    pulumi config set --secret supabaseDbPassword <SUPABASE_DB_PASSWORD>
    ```
+   Note: free plan orgs must omit `supabaseInstanceSize`.
 5. Optional Neon config (alternative provider):
    ```bash
    pulumi config set dbProvider neon
@@ -46,12 +67,17 @@ This folder manages Vercel + database infrastructure with Pulumi (TypeScript).
    ```bash
    pulumi package add terraform-provider kislerdm/neon
    ```
+6. Install provider SDKs and node deps:
+   ```bash
+   pulumi package add terraform-provider supabase/supabase
+   pulumi package add terraform-provider kislerdm/neon
+   npm install
+   ```
 
 ## Running locally
 ```bash
-cd infra
-pulumi preview --stack dev
-pulumi up --stack dev
+./infra/scripts/pulumi-env.sh -- preview --stack dev
+./infra/scripts/pulumi-env.sh -- up --stack dev
 ```
 
 ## Outputs

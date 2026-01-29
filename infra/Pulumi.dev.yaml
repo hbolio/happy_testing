@@ -1,0 +1,10 @@
+config:
+  happy-testing-infra:appName: happy-testing
+  happy-testing-infra:dbProvider: supabase
+  happy-testing-infra:vercelProjectId: prj_E3H01oUIeMKfJ2CviAhwqYQe6AUl
+  happy-testing-infra:vercelTeamId: team_aTVOSi4XY3chmbrFDFKMAtIZ
+  happy-testing-infra:vercelFramework: nextjs
+  happy-testing-infra:supabaseOrganizationId: ovzgjqzlhfupclmfbyza
+  happy-testing-infra:supabaseRegion: us-east-1
+  happy-testing-infra:supabaseDbPassword:
+    secure: AAABAGm5GjZr2TEEez7lvJpCkhilpGbaKx4HtDjPCDW+5DSdS5gid9YuHfpuq80Q

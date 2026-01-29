@@ -5,3 +5,14 @@ runtime:
   name: nodejs
   options:
     typescript: true
+packages:
+  supabase:
+    source: terraform-provider
+    version: 1.0.2
+    parameters:
+      - supabase/supabase
+  neon:
+    source: terraform-provider
+    version: 1.0.2
+    parameters:
+      - kislerdm/neon

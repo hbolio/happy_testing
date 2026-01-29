@@ -155,7 +155,13 @@ Add more tests to validate user flows and dish management!
 2. Create or identify your Vercel project and record:
 	- `VERCEL_PROJECT_ID`
 	- `VERCEL_ORG_ID`
-3. Configure Pulumi stacks (dev + prod) with infra config (details in `infra/README.md`).
+3. (Optional) If you need to import an existing Vercel project once, set `VERCEL_IMPORT_PROJECT_ID` in `.env.pulumi`.
+4. Create your env file and run the bootstrap helper:
+	```bash
+	cp .env.pulumi.example .env.pulumi
+	./infra/scripts/bootstrap.sh --apply
+	```
+5. Configure any optional overrides in `infra/README.md` as needed.
 
 ### GitHub Secrets (Repo → Settings → Secrets and variables → Actions)
 Create the following repository secrets:
@@ -172,7 +178,6 @@ Create the following repository secrets:
 
 ### Run infra locally
 ```bash
-cd infra
-pulumi preview --stack dev
-pulumi up --stack dev
+./infra/scripts/pulumi-env.sh -- preview --stack dev
+./infra/scripts/pulumi-env.sh -- up --stack dev
 ```

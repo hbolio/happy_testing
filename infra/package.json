@@ -10,10 +10,12 @@
     "up": "pulumi up --yes"
   },
   "dependencies": {
+    "@pulumi/neon": "file:sdks/neon",
     "@pulumi/pulumi": "^3.187.0",
+    "@pulumi/supabase": "file:sdks/supabase",
     "@pulumiverse/vercel": "^3.15.1",
-    "@pulumi/neon": "^0.13.0",
-    "@pulumi/supabase": "^1.6.1"
+    "neon": "file:sdks/neon",
+    "supabase": "file:sdks/supabase"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",

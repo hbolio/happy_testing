@@ -40,13 +40,30 @@ Manual steps (if you prefer to run commands yourself):
    pulumi config set vercelProjectId <VERCEL_PROJECT_ID>
    pulumi config set vercelTeamId <VERCEL_ORG_ID>
    ```
-   If you need to import an existing Vercel project once:
+   If you need to import an existing Vercel project once (recommended for prod):
    ```bash
    pulumi config set vercelImportProjectId <VERCEL_PROJECT_ID>
+   pulumi config set vercelProjectName <EXISTING_VERCEL_PROJECT_NAME>
    ```
    After the first successful `pulumi up`, remove that config:
    ```bash
    pulumi config rm vercelImportProjectId
+   ```
+   If Pulumi reports an ENV_CONFLICT for `DATABASE_URL`, import the existing env var once:
+   ```bash
+   pulumi config set vercelImportDatabaseUrlId <VERCEL_ENV_VAR_ID>
+   ```
+   After a successful update:
+   ```bash
+   pulumi config rm vercelImportDatabaseUrlId
+   ```
+   Or use the helper script:
+   ```bash
+   ./infra/scripts/import-vercel-prod.sh
+   ```
+   Then run a second `pulumi up` to apply full project settings:
+   ```bash
+   ./infra/scripts/pulumi-env.sh -- up --stack prod --yes
    ```
 4. Supabase config (default provider):
    ```bash
@@ -57,6 +74,11 @@ Manual steps (if you prefer to run commands yourself):
    pulumi config set --secret supabaseDbPassword <SUPABASE_DB_PASSWORD>
    ```
    Note: free plan orgs must omit `supabaseInstanceSize`.
+   For serverless environments, prefer the Supabase pooler URL for `DATABASE_URL`:
+   ```bash
+   pulumi config set --secret supabasePoolerUrl <SUPABASE_POOLER_URL>
+   pulumi config set --secret supabaseDirectUrl <SUPABASE_DIRECT_URL>
+   ```
 5. Optional Neon config (alternative provider):
    ```bash
    pulumi config set dbProvider neon

@@ -7,7 +7,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ci:local": "bash scripts/ci-local.sh"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",

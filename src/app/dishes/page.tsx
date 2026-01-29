@@ -20,8 +20,9 @@ export default async function DishesPage() {
     redirect('/login');
   }
 
-  // SSR fetch directo a la API local
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/dishes`, {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+    ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const res = await fetch(`${baseUrl}/api/dishes`, {
     headers: { Cookie: `session=${session.value}` },
     cache: 'no-store',
   });

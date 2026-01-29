@@ -61,16 +61,10 @@ test.describe('Dishes Management', () => {
       await expect(firstDish).toBeVisible({ timeout: 10000 });
       
       const viewButton = firstDish.locator('a:has-text("Ver")');
-      const href = await viewButton.getAttribute('href');
-      
-      // Wait for navigation after clicking
-      await Promise.all([
-        page.waitForNavigation({ timeout: 10000 }),
-        viewButton.click()
-      ]);
-      
-      // Should navigate to view page
-      expect(page.url()).toContain('/view');
+      await viewButton.click();
+      await expect(page).toHaveURL(/.*\/dishes\/\d+\/view/, { timeout: 10000 });
+      const viewDishPage = new ViewDishPage(page);
+      await expect(viewDishPage.stepsHeading).toBeVisible({ timeout: 10000 });
     });
 
     test('add dish button navigates to new dish form', async ({ page }) => {

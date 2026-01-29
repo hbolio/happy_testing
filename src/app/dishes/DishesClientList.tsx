@@ -10,7 +10,7 @@ interface Dish {
   quickPrep: boolean;
   prepTime: number;
   cookTime: number;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export default function DishesClientList({ dishes }: { dishes: Dish[] }) {

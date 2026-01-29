@@ -4,16 +4,6 @@ import Link from 'next/link';
 import DishesClientList from './DishesClientList';
 import { PrismaClient } from '@prisma/client';
 
-interface Dish {
-  id: number;
-  name: string;
-  description: string;
-  quickPrep: boolean;
-  prepTime: number;
-  cookTime: number;
-  imageUrl?: string;
-}
-
 export default async function DishesPage() {
   const cookieStore = await cookies();
   const session = cookieStore.get('session');

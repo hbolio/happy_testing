@@ -155,7 +155,10 @@ Add more tests to validate user flows and dish management!
 2. Create or identify your Vercel project and record:
 	- `VERCEL_PROJECT_ID`
 	- `VERCEL_ORG_ID`
-3. (Optional) If you need to import an existing Vercel project once, set `VERCEL_IMPORT_PROJECT_ID` in `.env.pulumi`.
+3. (Optional) If you need to import an existing Vercel project once, set `VERCEL_IMPORT_PROJECT_ID` and `VERCEL_IMPORT_PROJECT_NAME` in `.env.pulumi` and run:
+	```bash
+	./infra/scripts/import-vercel-prod.sh
+	```
 4. Create your env file and run the bootstrap helper:
 	```bash
 	cp .env.pulumi.example .env.pulumi

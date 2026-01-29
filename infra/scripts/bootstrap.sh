@@ -131,6 +131,18 @@ bootstrap_stack() {
   run pulumi -C "${INFRA_DIR}" config set vercelProjectId "${VERCEL_PROJECT_ID}" --stack "${stack}"
   run pulumi -C "${INFRA_DIR}" config set vercelTeamId "${VERCEL_ORG_ID}" --stack "${stack}"
   run pulumi -C "${INFRA_DIR}" config set vercelFramework "${VERCEL_FRAMEWORK}" --stack "${stack}"
+  if [[ -n "${VERCEL_IMPORT_DATABASE_URL_ID:-}" ]]; then
+    run pulumi -C "${INFRA_DIR}" config set vercelImportDatabaseUrlId "${VERCEL_IMPORT_DATABASE_URL_ID}" --stack "${stack}"
+  fi
+  if [[ -n "${VERCEL_NODE_VERSION:-}" ]]; then
+    run pulumi -C "${INFRA_DIR}" config set vercelNodeVersion "${VERCEL_NODE_VERSION}" --stack "${stack}"
+  fi
+  if [[ -n "${VERCEL_BUILD_COMMAND:-}" ]]; then
+    run pulumi -C "${INFRA_DIR}" config set vercelBuildCommand "${VERCEL_BUILD_COMMAND}" --stack "${stack}"
+  fi
+  if [[ -n "${VERCEL_INSTALL_COMMAND:-}" ]]; then
+    run pulumi -C "${INFRA_DIR}" config set vercelInstallCommand "${VERCEL_INSTALL_COMMAND}" --stack "${stack}"
+  fi
   if [[ -n "${VERCEL_IMPORT_PROJECT_ID:-}" ]]; then
     run pulumi -C "${INFRA_DIR}" config set vercelImportProjectId "${VERCEL_IMPORT_PROJECT_ID}" --stack "${stack}"
   fi
@@ -146,6 +158,12 @@ bootstrap_stack() {
       run pulumi -C "${INFRA_DIR}" config set supabaseInstanceSize "${SUPABASE_INSTANCE_SIZE}" --stack "${stack}"
     fi
     run pulumi -C "${INFRA_DIR}" config set --secret supabaseDbPassword "${SUPABASE_DB_PASSWORD}" --stack "${stack}"
+    if [[ -n "${SUPABASE_DIRECT_URL:-}" ]]; then
+      run pulumi -C "${INFRA_DIR}" config set --secret supabaseDirectUrl "${SUPABASE_DIRECT_URL}" --stack "${stack}"
+    fi
+    if [[ -n "${SUPABASE_POOLER_URL:-}" ]]; then
+      run pulumi -C "${INFRA_DIR}" config set --secret supabasePoolerUrl "${SUPABASE_POOLER_URL}" --stack "${stack}"
+    fi
   else
     run pulumi -C "${INFRA_DIR}" config set neonOrgId "${NEON_ORG_ID}" --stack "${stack}"
     run pulumi -C "${INFRA_DIR}" config set neonRegionId "${NEON_REGION_ID}" --stack "${stack}"

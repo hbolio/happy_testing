@@ -8,3 +8,8 @@ config:
   happy-testing-infra:supabaseRegion: us-east-1
   happy-testing-infra:supabaseDbPassword:
     secure: AAABAAs0YMa+9ZmSyFlJon5EAT5XXoGxWszDAQs4jeZyoE+DwwrEiVTJWgAHINbX
+  happy-testing-infra:vercelProjectName: happy-testing
+  happy-testing-infra:supabasePoolerUrl:
+    secure: AAABACI2VN5exRGJoR5+dF0+FDDq8x4WT73EYmP8nQe603WW2Wnrln83wL9LlVy+ID2T00YyYmOXutNqr8YjTvg0lgqtIZp2rvIFFpof8avWA6Oyxa0up5/akD+fxZXVmENf6W/6cJbq7eazss6HQFBkq6EOiHWAsdCmqdGtLX6sOs9n7mkcjn2JGM+G0W8EiIm7iwUNG9jv21AL3w7LDUN6zwiPBpCw6/ecrA==
+  happy-testing-infra:supabaseDirectUrl:
+    secure: AAABACzErAZMPrgt//IG9IjndMT1QdmPF3SL80YrOXJKo19oMRNWzKEnwTsgccmUp+IHdqFgim2F7AjxP1+4WwBDDIxk2xdYKeRLEFW7um85dKQFWw2tiD8wISuWdVJ+XSTaEQ24Do5kTT6asehak/MVN58b01FwrVSDv5S0R1gio1+awT2VWQ==
